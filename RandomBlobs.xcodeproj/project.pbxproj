@@ -21,6 +21,10 @@
 		AEE492BE18C6526300D43663 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE492A018C6526300D43663 /* UIKit.framework */; };
 		AEE492C618C6526400D43663 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AEE492C418C6526400D43663 /* InfoPlist.strings */; };
 		AEE492C818C6526400D43663 /* RandomBlobsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE492C718C6526400D43663 /* RandomBlobsTests.m */; };
+		AEE492D318C652AC00D43663 /* BlobView.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE492D218C652AC00D43663 /* BlobView.m */; };
+		AEE492D618C652C700D43663 /* BlobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE492D518C652C700D43663 /* BlobLayer.m */; };
+		AEE492DB18C65F0E00D43663 /* UIBezierPath-Points.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */; };
+		AEE492DC18C65F0E00D43663 /* UIBezierPath-Smoothing.m in Sources */ = {isa = PBXBuildFile; fileRef = AEE492DA18C65F0E00D43663 /* UIBezierPath-Smoothing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,14 @@
 		AEE492C318C6526400D43663 /* RandomBlobsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RandomBlobsTests-Info.plist"; sourceTree = "<group>"; };
 		AEE492C518C6526400D43663 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AEE492C718C6526400D43663 /* RandomBlobsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RandomBlobsTests.m; sourceTree = "<group>"; };
+		AEE492D118C652AC00D43663 /* BlobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobView.h; sourceTree = "<group>"; };
+		AEE492D218C652AC00D43663 /* BlobView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlobView.m; sourceTree = "<group>"; };
+		AEE492D418C652C700D43663 /* BlobLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobLayer.h; sourceTree = "<group>"; };
+		AEE492D518C652C700D43663 /* BlobLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlobLayer.m; sourceTree = "<group>"; };
+		AEE492D718C65F0E00D43663 /* UIBezierPath-Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath-Points.h"; sourceTree = "<group>"; };
+		AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath-Points.m"; sourceTree = "<group>"; };
+		AEE492D918C65F0E00D43663 /* UIBezierPath-Smoothing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath-Smoothing.h"; sourceTree = "<group>"; };
+		AEE492DA18C65F0E00D43663 /* UIBezierPath-Smoothing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath-Smoothing.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +124,10 @@
 		AEE492A218C6526300D43663 /* RandomBlobs */ = {
 			isa = PBXGroup;
 			children = (
+				AEE492D718C65F0E00D43663 /* UIBezierPath-Points.h */,
+				AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */,
+				AEE492D918C65F0E00D43663 /* UIBezierPath-Smoothing.h */,
+				AEE492DA18C65F0E00D43663 /* UIBezierPath-Smoothing.m */,
 				AEE492AB18C6526300D43663 /* AppDelegate.h */,
 				AEE492AC18C6526300D43663 /* AppDelegate.m */,
 				AEE492AE18C6526300D43663 /* Main.storyboard */,
@@ -119,6 +135,10 @@
 				AEE492B218C6526300D43663 /* ViewController.m */,
 				AEE492B418C6526300D43663 /* Images.xcassets */,
 				AEE492A318C6526300D43663 /* Supporting Files */,
+				AEE492D118C652AC00D43663 /* BlobView.h */,
+				AEE492D218C652AC00D43663 /* BlobView.m */,
+				AEE492D418C652C700D43663 /* BlobLayer.h */,
+				AEE492D518C652C700D43663 /* BlobLayer.m */,
 			);
 			path = RandomBlobs;
 			sourceTree = "<group>";
@@ -250,8 +270,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEE492B318C6526300D43663 /* ViewController.m in Sources */,
+				AEE492D618C652C700D43663 /* BlobLayer.m in Sources */,
+				AEE492DC18C65F0E00D43663 /* UIBezierPath-Smoothing.m in Sources */,
+				AEE492DB18C65F0E00D43663 /* UIBezierPath-Points.m in Sources */,
 				AEE492AD18C6526300D43663 /* AppDelegate.m in Sources */,
 				AEE492A918C6526300D43663 /* main.m in Sources */,
+				AEE492D318C652AC00D43663 /* BlobView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +486,7 @@
 				AEE492CD18C6526400D43663 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AEE492CE18C6526400D43663 /* Build configuration list for PBXNativeTarget "RandomBlobsTests" */ = {
 			isa = XCConfigurationList;
@@ -470,6 +495,7 @@
 				AEE492D018C6526400D43663 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
