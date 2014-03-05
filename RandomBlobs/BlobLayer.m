@@ -86,7 +86,9 @@
       if (step == 0)
         [path moveToPoint: aPoint];
       else
+      {
         [path addLineToPoint: aPoint];
+      }
     }
   }
   else
@@ -127,7 +129,11 @@
         
       [path moveToPoint: aPoint];
       else
+      {
         [path addLineToPoint: aPoint];
+//        if (index == 2)
+//          [path addLineToPoint: aPoint];
+      }
     }
   }
   

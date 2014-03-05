@@ -44,7 +44,7 @@
     [smoothedPath addLineToPoint:POINT(1)];
   
   int start = 3;
-  int end = points.count;
+  NSUInteger end = points.count;
   if (pathIsClosed)
   {
     start--;
