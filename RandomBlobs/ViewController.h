@@ -13,11 +13,13 @@
 {
   __weak IBOutlet BlobView *theBlobView;
   __weak IBOutlet UISwitch *make_circle_blobs_switch;
+  __weak IBOutlet UISwitch *show_control_points_switch;
 }
 
 
 - (IBAction)updateBlobShape:(UIButton *)sender;
 - (IBAction)handleCircleBlobSwitch:(UISwitch *)sender;
+- (IBAction)handleShowControlPointsSwitch:(UISwitch *)sender;
 
 
 @end

@@ -29,6 +29,11 @@
 {
   theBlobView.make_circle_blobs = YES;
   make_circle_blobs_switch.on = YES;
+
+  theBlobView.showPoints = YES;
+  show_control_points_switch.on = YES;
+
+  
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -71,6 +76,11 @@
 - (IBAction)handleCircleBlobSwitch:(UISwitch *)sender
 {
   theBlobView.make_circle_blobs = sender.isOn;
+}
+
+- (IBAction)handleShowControlPointsSwitch:(UISwitch *)sender
+{
+  theBlobView.showPoints = sender.isOn;
 }
 
 @end

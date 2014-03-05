@@ -14,6 +14,7 @@
 #pragma mark - properties
 //-----------------------------------------------------------------------------------------------------------
 @property (nonatomic, assign)   BOOL make_circle_blobs;
+@property (nonatomic, assign)   BOOL showPoints;
 
 //-----------------------------------------------------------------------------------------------------------
 #pragma mark - instance methods

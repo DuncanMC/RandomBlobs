@@ -33,10 +33,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="s9t-9Y-Xmj">
-                                <rect key="frame" x="258" y="738" width="252" height="46"/>
+                                <rect key="frame" x="258" y="887" width="252" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Igr-sp-Vdi">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Igr-sp-Vdi" userLabel="CircleBlobsSwitch">
                                         <rect key="frame" x="20" y="7" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
@@ -50,6 +50,20 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="aZD-iH-Bdr" userLabel="ShowControlPointsSwitch">
+                                        <rect key="frame" x="20" y="45" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="handleShowControlPointsSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="BIB-Bb-FB4"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show control points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tTK-26-Tnq">
+                                        <rect key="frame" x="86" y="50" width="154" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -58,6 +72,7 @@
                     </view>
                     <connections>
                         <outlet property="make_circle_blobs_switch" destination="Igr-sp-Vdi" id="WXd-H1-H5l"/>
+                        <outlet property="show_control_points_switch" destination="aZD-iH-Bdr" id="4vp-97-4VB"/>
                         <outlet property="theBlobView" destination="XVL-ok-voQ" id="JLv-2I-IbF"/>
                     </connections>
                 </viewController>

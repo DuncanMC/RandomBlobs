@@ -8,11 +8,19 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#define point_count 8
+
 @interface BlobLayer : CAShapeLayer
 {
-  CGPoint gridPoints[8];
+  CGPoint gridPoints[point_count];
+  CGPoint randomPoints[point_count];
   BOOL gridPointsBuilt;
+  BOOL useCirclarBlobs;
+  
+  CAShapeLayer *pointsLayer;
 }
+
+@property (nonatomic, assign) BOOL showPoints;
 
 - (void) buildBlobShapeUsingCircluarBlobs: (BOOL) use_circular_blobs;
 

@@ -8,4 +8,6 @@
 
 @interface UIBezierPath (Points)
 - (NSArray *) points;
+- (BOOL) pathIsClosed;
+
 @end

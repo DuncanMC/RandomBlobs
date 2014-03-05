@@ -29,10 +29,34 @@ void getPointsFromBezier(void *info, const CGPathElement *element)
         [bezierPoints addObject:VALUE(2)];
 }
 
+void isSubPathClosed(void *info, const CGPathElement *element)
+{
+  BOOL *subPathIsClosed = (BOOL *) info;
+  if (*subPathIsClosed) return;
+  
+  
+  // Retrieve the path element type and its points
+  CGPathElementType type = element->type;
+  
+  // Add the points if they're available (per type)
+  if (type == kCGPathElementCloseSubpath)
+  {
+    *subPathIsClosed = YES;
+    return;
+  }
+}
+
 - (NSArray *)points
 {
     NSMutableArray *points = [NSMutableArray array];
     CGPathApply(self.CGPath, (__bridge void *)points, getPointsFromBezier);
     return points;
+}
+
+- (BOOL) pathIsClosed;
+{
+  BOOL pathIsClosed = NO;
+  CGPathApply(self.CGPath, (void *) &pathIsClosed, isSubPathClosed);
+  return pathIsClosed;
 }
 @end

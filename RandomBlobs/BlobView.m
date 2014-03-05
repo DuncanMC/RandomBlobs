@@ -30,6 +30,12 @@
   [(BlobLayer *)self.layer buildBlobShapeUsingCircluarBlobs: _make_circle_blobs];
 }
 
+- (void) setShowPoints:(BOOL)showPoints
+{
+  _showPoints = showPoints;
+  ((BlobLayer *)self.layer).showPoints = showPoints;
+}
+
 //-----------------------------------------------------------------------------------------------------------
 #pragma mark - property methods
 //-----------------------------------------------------------------------------------------------------------
