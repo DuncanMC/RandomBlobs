@@ -18,6 +18,7 @@
   BOOL useCirclarBlobs;
   
   CAShapeLayer *pointsLayer;
+  CAShapeLayer *gridLayer;
 }
 
 @property (nonatomic, assign) BOOL showPoints;

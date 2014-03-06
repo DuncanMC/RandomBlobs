@@ -25,11 +25,28 @@
   pointsLayer = [CAShapeLayer layer];
   pointsLayer.frame = self.bounds;
   [self addSublayer: pointsLayer];
-  pointsLayer.fillColor = [UIColor clearColor].CGColor;
+  
+  
+  pointsLayer.fillColor = [UIColor colorWithRed: 0
+                                            green: 0
+                                             blue: 128
+                                            alpha: .5].CGColor;
   pointsLayer.strokeColor = [UIColor colorWithRed: 0
                                             green: 0
                                              blue: 0
-                                            alpha: .3].CGColor;
+                                            alpha: .5].CGColor;
+  
+  
+  gridLayer = [CAShapeLayer layer];
+  gridLayer.frame = self.bounds;
+  
+  gridLayer.fillColor = [UIColor clearColor].CGColor;
+  gridLayer.strokeColor = [UIColor colorWithRed: 0
+                                            green: 0
+                                             blue: 128
+                                            alpha: .5].CGColor;
+
+  [self addSublayer: gridLayer];
   return self;
 }
 
@@ -69,7 +86,7 @@
       CGFloat random_val;
       
       //Step around a circle
-      angle = M_PI * 2 / point_count * step;
+      angle = M_PI * 2 / point_count * step + M_PI_4*5;
       
       //randomize the angle slightly
       random_val = [self randomFloatPlusOrMinus: M_PI/point_count*.9];
@@ -119,7 +136,7 @@
       gridPoints[index++] = CGPointMake( roundf(side_sixth), roundf(side_half));
     }
     CGPoint aPoint;
-    for (int index = 0; index<8; index++)
+    for (int index = 0; index<point_count; index++)
     {
       aPoint = gridPoints[index];
       aPoint.x += roundf([self randomFloatPlusOrMinus: side_sixth * 3 / 4]);
@@ -146,36 +163,58 @@
   {
     [self rebuildPointsLayer];
   }
-  self.path = path.CGPath;
+  [self animateNewPath: path
+               inLayer: self];
 }
 
+- (void) animateNewPath: (UIBezierPath *) newPath
+                inLayer: (CAShapeLayer *) layer;
+{
+  CGPathRef oldPath = layer.path;
+  layer.path = newPath.CGPath;
+
+  BOOL animate = oldPath != nil;
+  if (animate)
+  {
+  CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath: @"path"];
+  [pathAnimation setFromValue:(__bridge id) oldPath];
+  [pathAnimation setToValue:(__bridge id)newPath.CGPath];
+  pathAnimation.duration = .5;
+
+  [layer addAnimation: pathAnimation
+              forKey: @"pathAnimation"];
+  }
+
+}
 //-----------------------------------------------------------------------------------------------------------
 #pragma mark - property methods
 //-----------------------------------------------------------------------------------------------------------
 
 - (void) rebuildPointsLayer;
 {
-  UIBezierPath *path = [UIBezierPath new];
+  UIBezierPath *pointsPath = [UIBezierPath new];
   
   CGFloat shortest_side = MIN(self.bounds.size.width, self.bounds.size.height);
   CGFloat side_third = shortest_side / 3;
   CGFloat side_half = shortest_side / 2;
 
-  for (int index = 0; index<8; index++)
+  for (int index = 0; index<point_count; index++)
   {
     static int dot_radius = 3;
-    [path moveToPoint:      CGPointMake(randomPoints[index].x + dot_radius, randomPoints[index].y)];
-    [path addArcWithCenter: randomPoints[index]
+    [pointsPath moveToPoint:      CGPointMake(randomPoints[index].x + dot_radius, randomPoints[index].y)];
+    [pointsPath addArcWithCenter: randomPoints[index]
                     radius: dot_radius
                 startAngle: 0
                   endAngle: M_PI * 2
                  clockwise: YES];
   }
+  UIBezierPath *gridPath = [UIBezierPath new];
+
   if (useCirclarBlobs)
   {
     CGFloat radius_base = roundf(shortest_side * 3.0/9);
-    [path moveToPoint: CGPointMake( side_half+radius_base, side_half)];
-    [path addArcWithCenter: CGPointMake(side_half, side_half)
+    [gridPath moveToPoint: CGPointMake( side_half+radius_base, side_half)];
+    [gridPath addArcWithCenter: CGPointMake(side_half, side_half)
                     radius: radius_base
                 startAngle: 0
                   endAngle: M_PI * 2
@@ -185,17 +224,18 @@
   {
     for(int index = 1; index< 3; index++)
     {
-      [path moveToPoint: CGPointMake( roundf( side_third*index), 0)];
-      [path addLineToPoint: CGPointMake( roundf(side_third*index ), shortest_side)];
+      [gridPath moveToPoint: CGPointMake( roundf( side_third*index), 0)];
+      [gridPath addLineToPoint: CGPointMake( roundf(side_third*index ), shortest_side)];
       
-      [path moveToPoint: CGPointMake(0, roundf(side_third*index))];
-      [path addLineToPoint: CGPointMake(shortest_side, roundf(side_third*index))];
+      [gridPath moveToPoint: CGPointMake(0, roundf(side_third*index))];
+      [gridPath addLineToPoint: CGPointMake(shortest_side, roundf(side_third*index))];
       
     }
     
   }
-
-  pointsLayer.path = path.CGPath;
+  [self animateNewPath: pointsPath inLayer: pointsLayer];
+  //pointsLayer.path = pointsPath.CGPath;
+  gridLayer.path = gridPath.CGPath;
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -204,7 +244,10 @@
 {
   _showPoints = showPoints;
   if (!showPoints)
+  {
     pointsLayer.path = nil;
+    gridLayer.path = nil;
+  }
   else
   {
     [self rebuildPointsLayer];
