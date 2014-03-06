@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE2043FB18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */; };
 		AEE4929D18C6526300D43663 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929C18C6526300D43663 /* Foundation.framework */; };
 		AEE4929F18C6526300D43663 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929E18C6526300D43663 /* CoreGraphics.framework */; };
 		AEE492A118C6526300D43663 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE492A018C6526300D43663 /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AE2043F918C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+performBlockAfterDelay.h"; sourceTree = "<group>"; };
+		AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+performBlockAfterDelay.m"; sourceTree = "<group>"; };
 		AEE4929918C6526300D43663 /* RandomBlobs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomBlobs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE4929C18C6526300D43663 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEE4929E18C6526300D43663 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -91,6 +94,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE2043FC18C8FDAE00D98E89 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				AEE492D718C65F0E00D43663 /* UIBezierPath-Points.h */,
+				AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */,
+				AEE492D918C65F0E00D43663 /* UIBezierPath-Smoothing.h */,
+				AEE492DA18C65F0E00D43663 /* UIBezierPath-Smoothing.m */,
+				AE2043F918C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.h */,
+				AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		AEE4929018C6526300D43663 = {
 			isa = PBXGroup;
 			children = (
@@ -124,10 +140,7 @@
 		AEE492A218C6526300D43663 /* RandomBlobs */ = {
 			isa = PBXGroup;
 			children = (
-				AEE492D718C65F0E00D43663 /* UIBezierPath-Points.h */,
-				AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */,
-				AEE492D918C65F0E00D43663 /* UIBezierPath-Smoothing.h */,
-				AEE492DA18C65F0E00D43663 /* UIBezierPath-Smoothing.m */,
+				AE2043FC18C8FDAE00D98E89 /* Categories */,
 				AEE492AB18C6526300D43663 /* AppDelegate.h */,
 				AEE492AC18C6526300D43663 /* AppDelegate.m */,
 				AEE492AE18C6526300D43663 /* Main.storyboard */,
@@ -271,6 +284,7 @@
 			files = (
 				AEE492B318C6526300D43663 /* ViewController.m in Sources */,
 				AEE492D618C652C700D43663 /* BlobLayer.m in Sources */,
+				AE2043FB18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m in Sources */,
 				AEE492DC18C65F0E00D43663 /* UIBezierPath-Smoothing.m in Sources */,
 				AEE492DB18C65F0E00D43663 /* UIBezierPath-Points.m in Sources */,
 				AEE492AD18C6526300D43663 /* AppDelegate.m in Sources */,

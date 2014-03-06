@@ -8,6 +8,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#define K_PATH_ANIMATION_COMPLETE_NOTICE @"PathAnimatinonComplete"
+
 #define point_count 8
 
 @interface BlobLayer : CAShapeLayer

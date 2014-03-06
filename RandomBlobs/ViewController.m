@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "BlobLayer.h"
+#import "NSObject+performBlockAfterDelay.h"
 
 @interface ViewController ()
 
@@ -29,15 +31,37 @@
 {
   theBlobView.make_circle_blobs = YES;
   make_circle_blobs_switch.on = YES;
-
+  
   theBlobView.showPoints = YES;
   show_control_points_switch.on = YES;
-
   
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+  
+  [super viewDidLoad];
+  animationCompleteObserver = [[NSNotificationCenter defaultCenter] addObserverForName: K_PATH_ANIMATION_COMPLETE_NOTICE
+                                                                                object: nil
+                                                                                 queue: nil
+                                                                            usingBlock: ^(NSNotification *note)
+                               {
+                                 animationInFlight = NO;
+                                 //NSLog(@"In path animation complete block");
+                                 changeShapeButton.enabled = YES;
+                                 make_circle_blobs_switch.enabled = YES;
+                                 if (loopChangesSwitch.isOn)
+                                   if (!animationInFlight)
+                                     [self updateBlobShape: nil];
+//                                   [self performBlockOnMainQueue:
+//                                    ^{
+//                                      if (!animationInFlight)
+//                                        [self updateBlobShape: nil];
+//                                    } afterDelay:0];
+                               }
+                               ];
 }
 
+- (void) dealloc;
+{
+  [[NSNotificationCenter defaultCenter] removeObserver: animationCompleteObserver];
+}
 //-----------------------------------------------------------------------------------------------------------
 
 - (void)didReceiveMemoryWarning
@@ -68,19 +92,40 @@
 
 - (IBAction)updateBlobShape:(UIButton *)sender
 {
-  [theBlobView updateBlobShape];
+  if (!animationInFlight)
+  {
+    animationInFlight = YES;
+    [theBlobView updateBlobShape];
+    changeShapeButton.enabled = NO;
+    make_circle_blobs_switch.enabled = NO;
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------
 
 - (IBAction)handleCircleBlobSwitch:(UISwitch *)sender
 {
-  theBlobView.make_circle_blobs = sender.isOn;
+  BOOL wasOn = theBlobView.make_circle_blobs;
+  if (wasOn != sender.isOn )
+  {
+    if (!animationInFlight)
+    {
+      animationInFlight = YES;
+      theBlobView.make_circle_blobs = sender.isOn;
+      changeShapeButton.enabled = NO;
+      make_circle_blobs_switch.enabled = NO;
+    }
+    else
+      sender.on = wasOn;
+  }
 }
 
 - (IBAction)handleShowControlPointsSwitch:(UISwitch *)sender
 {
   theBlobView.showPoints = sender.isOn;
+}
+
+- (IBAction)handleLoopChangesSwitch:(UISwitch *)sender {
 }
 
 @end

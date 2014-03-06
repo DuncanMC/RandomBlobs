@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="XVL-ok-voQ" customClass="BlobView">
-                                <rect key="frame" x="34" y="123.99999550410665" width="700" height="700"/>
+                                <rect key="frame" x="34" y="123.99998991697696" width="700" height="700"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -33,7 +33,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="s9t-9Y-Xmj" userLabel="Switches view">
-                                <rect key="frame" x="258" y="887" width="252" height="80"/>
+                                <rect key="frame" x="258" y="850" width="252" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Igr-sp-Vdi" userLabel="CircleBlobsSwitch">
@@ -64,6 +64,20 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="STS-v0-DQJ" userLabel="ShowControlPointsSwitch">
+                                        <rect key="frame" x="20" y="83" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="handleLoopChangesSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="dzD-co-fDR"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loop changes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="247-3n-L3T">
+                                        <rect key="frame" x="86" y="88" width="110" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -89,6 +103,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="changeShapeButton" destination="xuk-hL-3Pc" id="Xgy-3H-uUW"/>
+                        <outlet property="loopChangesSwitch" destination="STS-v0-DQJ" id="ulM-9a-SCM"/>
                         <outlet property="make_circle_blobs_switch" destination="Igr-sp-Vdi" id="WXd-H1-H5l"/>
                         <outlet property="show_control_points_switch" destination="aZD-iH-Bdr" id="4vp-97-4VB"/>
                         <outlet property="theBlobView" destination="XVL-ok-voQ" id="JLv-2I-IbF"/>

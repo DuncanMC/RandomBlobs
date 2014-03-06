@@ -9,6 +9,7 @@
 #import "BlobLayer.h"
 #import "UIBezierPath-Smoothing.h"
 
+
 @implementation BlobLayer
 
 - (id)init
@@ -172,19 +173,26 @@
 {
   CGPathRef oldPath = layer.path;
   layer.path = newPath.CGPath;
-
+  
   BOOL animate = oldPath != nil;
   if (animate)
   {
-  CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath: @"path"];
-  [pathAnimation setFromValue:(__bridge id) oldPath];
-  [pathAnimation setToValue:(__bridge id)newPath.CGPath];
-  pathAnimation.duration = .5;
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath: @"path"];
+    [pathAnimation setFromValue:(__bridge id) oldPath];
+    [pathAnimation setToValue:(__bridge id)newPath.CGPath];
+    pathAnimation.duration = .5;
+    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 
-  [layer addAnimation: pathAnimation
-              forKey: @"pathAnimation"];
+    if (layer == self)
+      pathAnimation.delegate = self;
+    
+    [layer addAnimation: pathAnimation
+                 forKey: @"pathAnimation"];
   }
-
+  
+  
+  
+  
 }
 //-----------------------------------------------------------------------------------------------------------
 #pragma mark - property methods
@@ -253,4 +261,25 @@
     [self rebuildPointsLayer];
   }
 }
+//-----------------------------------------------------------------------------------------------------------
+#pragma mark - CAAnimation delegate methods
+//-----------------------------------------------------------------------------------------------------------
+/*
+ This method looks for a value added to the animation that just completed
+ with the key kAnimationCompletionBlock.
+ If it exists, it assumes it is a code block of type animationCompletionBlock, and executes the code block.
+ This allows you to add a custom block of completion code to any animation or animation group, rather than
+ Having a big complicated switch statement in your animationDidStop:finished: method with global animation
+ Completion code.
+ (Note that the system won't call the animationDidStop:finished method for individual animations in an
+ Animation group - it will only call the completion method for the entire group. Thus, if you want to run
+ code after part of an animation group completes, you have to set up a manual timer.)
+ */
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
+
+}
+
 @end
