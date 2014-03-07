@@ -66,9 +66,42 @@
 	return aRandom;
 }
 
-- (void) buildBlobShapeUsingCircluarBlobs: (BOOL) use_circular_blobs;
+- (void) buildBlobShapeUsingCircluarBlobs: (BOOL) use_circular_blobs
+                              point_count: (int) new_point_count;
 {
-  useCirclarBlobs = use_circular_blobs;
+  /*
+   (!use_circular_blobs && !_useCirclarBlobs)
+   ||
+   (use_circular_blobs && point_count == new_point_count)
+   */
+  BOOL animate =
+  //We're not using circlar blobs, and din't last time
+  (!use_circular_blobs && !_useCirclarBlobs)
+  ||
+  //or we're not using circulare blobs, we did last time,
+  //and the old count was 8
+  (!use_circular_blobs && _useCirclarBlobs && _point_count == 8)
+  ||
+  //or we're switching from square to circular and the new point count is 8
+  (use_circular_blobs && !_useCirclarBlobs && new_point_count == 8)
+  
+  ||
+  (_useCirclarBlobs == use_circular_blobs && _point_count == new_point_count);
+
+  _useCirclarBlobs = use_circular_blobs;
+  if (!use_circular_blobs)
+    new_point_count = 8;
+  
+  if (use_circular_blobs && new_point_count == 0)
+  {
+    [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
+    return;
+  }
+
+  
+  if (use_circular_blobs)
+    _point_count = new_point_count;
+  
   //build a closed path that is a distorted polygon.
   
   UIBezierPath *path = [UIBezierPath new];
@@ -82,15 +115,15 @@
     CGPoint aPoint;
     radius_base = roundf(shortest_side * 3.0/9);
     
-    for (step = 0; step < point_count; step++)
+    for (step = 0; step < _point_count; step++)
     {
       CGFloat random_val;
       
       //Step around a circle
-      angle = M_PI * 2 / point_count * step + M_PI_4*5;
+      angle = M_PI * 2 / _point_count * step + M_PI_4*5;
       
       //randomize the angle slightly
-      random_val = [self randomFloatPlusOrMinus: M_PI/point_count*.9];
+      random_val = [self randomFloatPlusOrMinus: M_PI/_point_count*.9];
       angle += random_val;
       
       
@@ -137,7 +170,7 @@
       gridPoints[index++] = CGPointMake( roundf(side_sixth), roundf(side_half));
     }
     CGPoint aPoint;
-    for (int index = 0; index<point_count; index++)
+    for (int index = 0; index<8; index++)
     {
       aPoint = gridPoints[index];
       aPoint.x += roundf([self randomFloatPlusOrMinus: side_sixth * 3 / 4]);
@@ -162,11 +195,19 @@
   
   if (_showPoints)
   {
-    [self rebuildPointsLayer];
+    [self rebuildPointsLayerWithAnimation: animate];
   }
-  [self animateNewPath: path
-               inLayer: self];
+  if (animate)
+    [self animateNewPath: path
+                 inLayer: self];
+  else
+  {
+    self.path = path.CGPath;
+    [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
+  }
 }
+
+//-----------------------------------------------------------------------------------------------------------
 
 - (void) animateNewPath: (UIBezierPath *) newPath
                 inLayer: (CAShapeLayer *) layer;
@@ -180,8 +221,9 @@
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath: @"path"];
     [pathAnimation setFromValue:(__bridge id) oldPath];
     [pathAnimation setToValue:(__bridge id)newPath.CGPath];
-    pathAnimation.duration = .5;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    pathAnimation.duration = .8;
+    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+//    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 
     if (layer == self)
       pathAnimation.delegate = self;
@@ -195,38 +237,41 @@
   
 }
 //-----------------------------------------------------------------------------------------------------------
-#pragma mark - property methods
+#pragma mark - custom instance methods
 //-----------------------------------------------------------------------------------------------------------
 
-- (void) rebuildPointsLayer;
+- (void) rebuildPointsLayerWithAnimation: (BOOL) animate;
 {
   UIBezierPath *pointsPath = [UIBezierPath new];
   
   CGFloat shortest_side = MIN(self.bounds.size.width, self.bounds.size.height);
   CGFloat side_third = shortest_side / 3;
   CGFloat side_half = shortest_side / 2;
-
-  for (int index = 0; index<point_count; index++)
+  int points = 8;
+  if (_useCirclarBlobs)
+    points = _point_count;
+  
+  for (int index = 0; index<points; index++)
   {
     static int dot_radius = 3;
     [pointsPath moveToPoint:      CGPointMake(randomPoints[index].x + dot_radius, randomPoints[index].y)];
     [pointsPath addArcWithCenter: randomPoints[index]
-                    radius: dot_radius
-                startAngle: 0
-                  endAngle: M_PI * 2
-                 clockwise: YES];
+                          radius: dot_radius
+                      startAngle: 0
+                        endAngle: M_PI * 2
+                       clockwise: YES];
   }
   UIBezierPath *gridPath = [UIBezierPath new];
-
-  if (useCirclarBlobs)
+  
+  if (_useCirclarBlobs)
   {
     CGFloat radius_base = roundf(shortest_side * 3.0/9);
     [gridPath moveToPoint: CGPointMake( side_half+radius_base, side_half)];
     [gridPath addArcWithCenter: CGPointMake(side_half, side_half)
-                    radius: radius_base
-                startAngle: 0
-                  endAngle: M_PI * 2
-                 clockwise: YES];
+                        radius: radius_base
+                    startAngle: 0
+                      endAngle: M_PI * 2
+                     clockwise: YES];
   }
   else
   {
@@ -241,9 +286,22 @@
     }
     
   }
-  [self animateNewPath: pointsPath inLayer: pointsLayer];
-  //pointsLayer.path = pointsPath.CGPath;
+  if (animate)
+    [self animateNewPath: pointsPath inLayer: pointsLayer];
+  else
+    pointsLayer.path = pointsPath.CGPath;
   gridLayer.path = gridPath.CGPath;
+}
+
+
+
+//-----------------------------------------------------------------------------------------------------------
+#pragma mark - property methods
+//-----------------------------------------------------------------------------------------------------------
+
+- (CGPoint *) randomPointsArray;
+{
+  return randomPoints;
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -258,7 +316,7 @@
   }
   else
   {
-    [self rebuildPointsLayer];
+    [self rebuildPointsLayerWithAnimation: YES];
   }
 }
 //-----------------------------------------------------------------------------------------------------------

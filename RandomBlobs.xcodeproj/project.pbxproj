@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AE2043FB18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */; };
+		AE20440218CA65B500D98E89 /* DebugImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2043FF18CA65B500D98E89 /* DebugImageView.m */; };
+		AE20440318CA65B500D98E89 /* DebugLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AE20440118CA65B500D98E89 /* DebugLayer.m */; };
+		AE20440718CA67F800D98E89 /* CALayer+setUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */; };
 		AEE4929D18C6526300D43663 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929C18C6526300D43663 /* Foundation.framework */; };
 		AEE4929F18C6526300D43663 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929E18C6526300D43663 /* CoreGraphics.framework */; };
 		AEE492A118C6526300D43663 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE492A018C6526300D43663 /* UIKit.framework */; };
@@ -41,6 +44,13 @@
 /* Begin PBXFileReference section */
 		AE2043F918C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+performBlockAfterDelay.h"; sourceTree = "<group>"; };
 		AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+performBlockAfterDelay.m"; sourceTree = "<group>"; };
+		AE2043FE18CA65B500D98E89 /* DebugImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugImageView.h; sourceTree = "<group>"; };
+		AE2043FF18CA65B500D98E89 /* DebugImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugImageView.m; sourceTree = "<group>"; };
+		AE20440018CA65B500D98E89 /* DebugLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLayer.h; sourceTree = "<group>"; };
+		AE20440118CA65B500D98E89 /* DebugLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLayer.m; sourceTree = "<group>"; };
+		AE20440418CA65D600D98E89 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		AE20440518CA67F800D98E89 /* CALayer+setUIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+setUIColor.h"; sourceTree = "<group>"; };
+		AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+setUIColor.m"; sourceTree = "<group>"; };
 		AEE4929918C6526300D43663 /* RandomBlobs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomBlobs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE4929C18C6526300D43663 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEE4929E18C6526300D43663 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,6 +107,8 @@
 		AE2043FC18C8FDAE00D98E89 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AE20440518CA67F800D98E89 /* CALayer+setUIColor.h */,
+				AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */,
 				AEE492D718C65F0E00D43663 /* UIBezierPath-Points.h */,
 				AEE492D818C65F0E00D43663 /* UIBezierPath-Points.m */,
 				AEE492D918C65F0E00D43663 /* UIBezierPath-Smoothing.h */,
@@ -105,6 +117,17 @@
 				AE2043FA18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		AE2043FD18CA65B500D98E89 /* DebugLayer */ = {
+			isa = PBXGroup;
+			children = (
+				AE2043FE18CA65B500D98E89 /* DebugImageView.h */,
+				AE2043FF18CA65B500D98E89 /* DebugImageView.m */,
+				AE20440018CA65B500D98E89 /* DebugLayer.h */,
+				AE20440118CA65B500D98E89 /* DebugLayer.m */,
+			);
+			path = DebugLayer;
 			sourceTree = "<group>";
 		};
 		AEE4929018C6526300D43663 = {
@@ -140,12 +163,14 @@
 		AEE492A218C6526300D43663 /* RandomBlobs */ = {
 			isa = PBXGroup;
 			children = (
+				AE20440418CA65D600D98E89 /* Constants.h */,
 				AE2043FC18C8FDAE00D98E89 /* Categories */,
 				AEE492AB18C6526300D43663 /* AppDelegate.h */,
 				AEE492AC18C6526300D43663 /* AppDelegate.m */,
 				AEE492AE18C6526300D43663 /* Main.storyboard */,
 				AEE492B118C6526300D43663 /* ViewController.h */,
 				AEE492B218C6526300D43663 /* ViewController.m */,
+				AE2043FD18CA65B500D98E89 /* DebugLayer */,
 				AEE492B418C6526300D43663 /* Images.xcassets */,
 				AEE492A318C6526300D43663 /* Supporting Files */,
 				AEE492D118C652AC00D43663 /* BlobView.h */,
@@ -282,14 +307,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE20440218CA65B500D98E89 /* DebugImageView.m in Sources */,
 				AEE492B318C6526300D43663 /* ViewController.m in Sources */,
 				AEE492D618C652C700D43663 /* BlobLayer.m in Sources */,
 				AE2043FB18C8FD9F00D98E89 /* NSObject+performBlockAfterDelay.m in Sources */,
 				AEE492DC18C65F0E00D43663 /* UIBezierPath-Smoothing.m in Sources */,
 				AEE492DB18C65F0E00D43663 /* UIBezierPath-Points.m in Sources */,
 				AEE492AD18C6526300D43663 /* AppDelegate.m in Sources */,
+				AE20440718CA67F800D98E89 /* CALayer+setUIColor.m in Sources */,
 				AEE492A918C6526300D43663 /* main.m in Sources */,
 				AEE492D318C652AC00D43663 /* BlobView.m in Sources */,
+				AE20440318CA65B500D98E89 /* DebugLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

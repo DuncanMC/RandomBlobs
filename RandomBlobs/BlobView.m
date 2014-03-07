@@ -27,8 +27,13 @@
 - (void) setMake_circle_blobs:(BOOL)make_circle_blobs;
 {
   _make_circle_blobs = make_circle_blobs;
-  [(BlobLayer *)self.layer buildBlobShapeUsingCircluarBlobs: _make_circle_blobs];
+  BlobLayer *theBlobLayer = (BlobLayer *)self.layer;
+  int thePointCount = theBlobLayer.point_count;
+  [theBlobLayer buildBlobShapeUsingCircluarBlobs: _make_circle_blobs
+                                     point_count: thePointCount];
 }
+
+//-----------------------------------------------------------------------------------------------------------
 
 - (void) setShowPoints:(BOOL)showPoints
 {
@@ -40,9 +45,11 @@
 #pragma mark - property methods
 //-----------------------------------------------------------------------------------------------------------
 
-- (void) updateBlobShape;
+- (void) updateBlobShapeWithPointCount: (int) point_count;
 {
-  [(BlobLayer *)self.layer buildBlobShapeUsingCircluarBlobs: _make_circle_blobs];
+  BlobLayer *theBlobLayer = (BlobLayer *)self.layer;
+  [theBlobLayer buildBlobShapeUsingCircluarBlobs: _make_circle_blobs
+                                                point_count: point_count];
 }
 
 - (void) didMoveToSuperview;
