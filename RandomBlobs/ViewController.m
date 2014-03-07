@@ -227,7 +227,7 @@
   changeShapeButton.enabled = NO;
   make_circle_blobs_switch.enabled = NO;
   animateImageViewButton.enabled = NO;
-  CGFloat totalDuration = 20;
+  CGFloat totalDuration = 5;
   
   int pointCount;
   
@@ -315,7 +315,7 @@
   //dlog(0, @"Entering %s. text field = %@", __PRETTY_FUNCTION__, textField);
   if (textField == pointCountField)
   {
-    int new_value = [pointCountField.text integerValue];
+    NSInteger new_value = [pointCountField.text integerValue];
     if (new_value > 2 && new_value <= K_MAX_POINT_COUNT)
     {
       self.point_count = new_value;

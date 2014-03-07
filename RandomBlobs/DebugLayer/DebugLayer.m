@@ -66,11 +66,13 @@
 #endif
 #if K_LOG_KEYFRAME_STEPS && K_FIX_ANIMATION
       NSLog(@"\n\n>--->> Removing extra indexes from values and keyTimes <<---");
-#endif
       
       previousValue = nil;
       previousTime = nil;
-      
+#endif
+ 
+#if K_LOG_KEYFRAME_STEPS || K_FIX_ANIMATION
+
       for (int index = 0; index<keyframe.values.count; index++ )
       {
         NSValue *aValue = keyframe.values[index];
@@ -95,6 +97,7 @@
         previousValue = aValue;
         previousTime = aTime;
       }
+#endif
 #if K_FIX_ANIMATION
       keyframe.values = newValues;
       keyframe.keyTimes = newTimes;
@@ -111,8 +114,8 @@
           NSLog(@"  Key %d, value = %@,\ttime = %.2f", index, aValue, aTime.floatValue);
         else
           NSLog(@"  Key %d, value = %s,\ttime = %.2f", index, aValueType, aTime.floatValue);
-      }
 #endif
+      }
 #endif
 
 #if K_FIX_ANIMATION
