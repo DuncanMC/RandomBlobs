@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
   theBlobView.make_circle_blobs = YES;
-  self.point_count = 8;
+  self.point_count = 31;
   
   make_circle_blobs_switch.on = YES;
   
@@ -239,45 +239,75 @@
   
   [self performBlockOnMainQueue: ^
    {
-     [UIView animateKeyframesWithDuration: totalDuration
-                                    delay:0.0
-                                  options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
-                               animations:
-      ^{
-        for (int index = 1; index <= pointCount; index++)
-        {
-          CGFloat startTime = ((CGFloat)index-1)/pointCount;
-          CGFloat thisDuration = relDuration;
+     if (FALSE)
+     {
+       [UIView animateKeyframesWithDuration: totalDuration
+                                      delay:0.0
+                                    options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
+                                 animations:
+        ^{
+          for (int index = 1; index <= pointCount; index++)
+          {
+            CGFloat startTime = ((CGFloat)index-1)/pointCount;
+            CGFloat thisDuration = relDuration;
+            
+            [UIView addKeyframeWithRelativeStartTime: startTime
+                                    relativeDuration: thisDuration
+                                          animations: ^
+             {
+               int arrayIndex = index % pointCount;
+               CGPoint thisPoint =randomPointsArray[arrayIndex];
+               thisPoint = [theBlobView convertPoint: thisPoint toView: theBlobView.superview ];
+               animationImageView.center = thisPoint;
+             }
+             ];
+          }
           
-          [UIView addKeyframeWithRelativeStartTime: startTime
-                                  relativeDuration: thisDuration
-                                        animations: ^
-           {
-             int arrayIndex = index % pointCount;
-             CGPoint thisPoint =randomPointsArray[arrayIndex];
-             thisPoint = [theBlobView convertPoint: thisPoint toView: theBlobView.superview ];
-             animationImageView.center = thisPoint;
-           }
-           ];
         }
-        
-      }
-                               completion: ^(BOOL finished)
-      {
-        changeShapeButton.enabled = YES;
-        make_circle_blobs_switch.enabled = YES;
-        animateImageViewButton.enabled = YES;
-        pointCountField.enabled = theBlobView.make_circle_blobs;
-
-        [self performBlockOnMainQueue: ^
-         {
-           animationImageView.hidden = YES;
-         }
-                           afterDelay:.5];
-      }
-      ];
+                                 completion: ^(BOOL finished)
+        {
+          changeShapeButton.enabled = YES;
+          make_circle_blobs_switch.enabled = YES;
+          animateImageViewButton.enabled = YES;
+          pointCountField.enabled = theBlobView.make_circle_blobs;
+          
+          [self performBlockOnMainQueue: ^
+           {
+             animationImageView.hidden = YES;
+           }
+                             afterDelay:.5];
+        }
+        ];
+     }
+     else
+     {
+       CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
+       CGPoint origin = theBlobView.frame.origin;
+       CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
+       path = CGPathCreateCopyByTransformingPath(path, &transform);
+       CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
+       pathAnimation.duration = totalDuration;
+       pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+       pathAnimation.rotationMode = kCAAnimationRotateAuto;
+       pathAnimation.path = path;
+       pathAnimation.delegate = self;
+       
+       [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
+       
+     }
    }
                      afterDelay: 0.5];
+}
+
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
+  [self performBlockOnMainQueue: ^
+   {
+     animationImageView.hidden = YES;
+   }
+                     afterDelay:.5];
 }
 
 //-----------------------------------------------------------------------------------------------------------
