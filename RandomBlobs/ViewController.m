@@ -227,7 +227,7 @@
   changeShapeButton.enabled = NO;
   make_circle_blobs_switch.enabled = NO;
   animateImageViewButton.enabled = NO;
-  CGFloat totalDuration = _point_count *.3;
+  CGFloat totalDuration = _point_count *.5;
   
   int pointCount;
   
@@ -316,7 +316,9 @@
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-  animationInFlight = NO;
+  stopAnimationButton.enabled = NO;
+
+  imageAnimationInFlight = NO;
   //NSLog(@"In path animation complete block");
   changeShapeButton.enabled = YES;
   make_circle_blobs_switch.enabled = YES;
