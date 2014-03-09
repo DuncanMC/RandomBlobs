@@ -19,6 +19,9 @@
   __weak IBOutlet UISwitch *loopChangesSwitch;
   __weak IBOutlet UIImageView *animationImageView;
   __weak IBOutlet UITextField *pointCountField;
+  __weak IBOutlet UIButton *stopAnimationButton;
+  __weak IBOutlet UISwitch *useViewAnimationSwitch;
+  __weak IBOutlet UISwitch *rotateImageSwitch;
   id animationCompleteObserver;
   
   id showKeyboardNotificaiton;
@@ -26,7 +29,8 @@
 
   __weak UITextField* textFieldToEdit;
 
-  BOOL animationInFlight;
+  BOOL pathAnimationInFlight;
+  BOOL imageAnimationInFlight;
   
   CGFloat keyboardShiftAmount;
   CGFloat keyboardSlideDuration;
@@ -40,6 +44,8 @@
 - (IBAction)handleShowControlPointsSwitch:(UISwitch *)sender;
 - (IBAction)handleLoopChangesSwitch:(UISwitch *)sender;
 - (IBAction)handleAnimateImageButton:(UIButton *)sender;
+
+- (IBAction)handleStopAnimation:(UIButton *)sender;
 
 
 

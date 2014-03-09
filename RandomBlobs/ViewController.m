@@ -44,7 +44,7 @@
                                                                                  queue: nil
                                                                             usingBlock: ^(NSNotification *note)
                                {
-                                 animationInFlight = NO;
+                                 pathAnimationInFlight = NO;
                                  //NSLog(@"In path animation complete block");
                                  changeShapeButton.enabled = YES;
                                  make_circle_blobs_switch.enabled = YES;
@@ -52,7 +52,7 @@
                                  pointCountField.enabled = theBlobView.make_circle_blobs;
 
                                  if (loopChangesSwitch.isOn)
-                                   if (!animationInFlight)
+                                   if (!pathAnimationInFlight)
                                      [self updateBlobShape: nil];
                                }
                                ];
@@ -168,9 +168,9 @@
 
 - (IBAction)updateBlobShape:(UIButton *)sender
 {
-  if (!animationInFlight)
+  if (!pathAnimationInFlight)
   {
-    animationInFlight = YES;
+    pathAnimationInFlight = YES;
     BlobLayer *theBlobLayer = (BlobLayer*)theBlobView.layer;
 
     [theBlobView updateBlobShapeWithPointCount: theBlobLayer.point_count];
@@ -189,9 +189,9 @@
   BOOL wasOn = theBlobView.make_circle_blobs;
   if (wasOn != sender.isOn )
   {
-    if (!animationInFlight)
+    if (!pathAnimationInFlight)
     {
-      animationInFlight = YES;
+      pathAnimationInFlight = YES;
       changeShapeButton.enabled = NO;
       make_circle_blobs_switch.enabled = NO;
       pointCountField.enabled = NO;
@@ -220,14 +220,14 @@
   animationImageView.center = startPoint;
   animationImageView.alpha = .75;
   animationImageView.hidden = NO;
-  
+  stopAnimationButton.enabled = YES;
   pointCountField.enabled = NO;
 
   
   changeShapeButton.enabled = NO;
   make_circle_blobs_switch.enabled = NO;
   animateImageViewButton.enabled = NO;
-  CGFloat totalDuration = _point_count *.5;
+  CGFloat totalDuration = _point_count *.3;
   
   int pointCount;
   
@@ -237,9 +237,11 @@
     pointCount = 8;
   CGFloat relDuration = 1.0 / pointCount;
   
+  imageAnimationInFlight = YES;
+  
   [self performBlockOnMainQueue: ^
    {
-     if (FALSE)
+     if (useViewAnimationSwitch.isOn)
      {
        [UIView animateKeyframesWithDuration: totalDuration
                                       delay:0.0
@@ -269,6 +271,8 @@
           changeShapeButton.enabled = YES;
           make_circle_blobs_switch.enabled = YES;
           animateImageViewButton.enabled = YES;
+          stopAnimationButton.enabled = NO;
+
           pointCountField.enabled = theBlobView.make_circle_blobs;
           
           [self performBlockOnMainQueue: ^
@@ -289,7 +293,8 @@
        pathAnimation.duration = totalDuration;
        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
        pathAnimation.calculationMode = kCAAnimationPaced;
-       pathAnimation.rotationMode = kCAAnimationRotateAuto;
+       if (rotateImageSwitch.isOn)
+         pathAnimation.rotationMode = kCAAnimationRotateAuto;
        pathAnimation.path = path;
        pathAnimation.delegate = self;
        
@@ -300,12 +305,19 @@
                      afterDelay: 0.5];
 }
 
+- (IBAction)handleStopAnimation:(UIButton *)sender
+{
+  [animationImageView.layer removeAllAnimations];
+}
+
 //-----------------------------------------------------------------------------------------------------------
 #pragma mark -	CAAnimation delegate methods
 //-----------------------------------------------------------------------------------------------------------
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
+  stopAnimationButton.enabled = NO;
+
   [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
   [self performBlockOnMainQueue: ^
    {
