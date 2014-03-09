@@ -227,7 +227,7 @@
   changeShapeButton.enabled = NO;
   make_circle_blobs_switch.enabled = NO;
   animateImageViewButton.enabled = NO;
-  CGFloat totalDuration = 5;
+  CGFloat totalDuration = _point_count *.5;
   
   int pointCount;
   
@@ -288,6 +288,7 @@
        CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
        pathAnimation.duration = totalDuration;
        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+       pathAnimation.calculationMode = kCAAnimationPaced;
        pathAnimation.rotationMode = kCAAnimationRotateAuto;
        pathAnimation.path = path;
        pathAnimation.delegate = self;
@@ -299,6 +300,9 @@
                      afterDelay: 0.5];
 }
 
+//-----------------------------------------------------------------------------------------------------------
+#pragma mark -	CAAnimation delegate methods
+//-----------------------------------------------------------------------------------------------------------
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
