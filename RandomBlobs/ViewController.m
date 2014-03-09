@@ -302,7 +302,13 @@
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName: K_PATH_ANIMATION_COMPLETE_NOTICE object: self];
+  animationInFlight = NO;
+  //NSLog(@"In path animation complete block");
+  changeShapeButton.enabled = YES;
+  make_circle_blobs_switch.enabled = YES;
+  animateImageViewButton.enabled = YES;
+  pointCountField.enabled = theBlobView.make_circle_blobs;
+  
   [self performBlockOnMainQueue: ^
    {
      animationImageView.hidden = YES;
