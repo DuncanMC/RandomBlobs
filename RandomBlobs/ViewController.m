@@ -227,7 +227,8 @@
   changeShapeButton.enabled = NO;
   make_circle_blobs_switch.enabled = NO;
   animateImageViewButton.enabled = NO;
-  CGFloat totalDuration = _point_count *.5;
+  CGFloat totalDuration = _point_count *.3 + 3
+  ;
   
   int pointCount;
   
