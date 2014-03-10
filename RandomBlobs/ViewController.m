@@ -285,21 +285,75 @@
      }
      else
      {
-       CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
-       CGPoint origin = theBlobView.frame.origin;
-       CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
-       path = CGPathCreateCopyByTransformingPath(path, &transform);
-       CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
-       pathAnimation.duration = totalDuration;
-       pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-       pathAnimation.calculationMode = kCAAnimationPaced;
-       if (rotateImageSwitch.isOn)
-         pathAnimation.rotationMode = kCAAnimationRotateAuto;
-       pathAnimation.path = path;
-       pathAnimation.delegate = self;
-       
-       [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
-       
+       if (FALSE)
+       {
+         //Create a CAKeyframeAnimation using the path from the BlobLayer.
+         
+ //Get the path.
+ CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
+ CGPoint origin = theBlobView.frame.origin;
+ CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
+ 
+ //The path is using zero-based coordinates.
+ //Create a new path using the coordinates of the VC's content view
+ path = CGPathCreateCopyByTransformingPath(path, &transform);
+ 
+ //Create a keyframe animation object
+ CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
+ 
+ pathAnimation.duration = totalDuration;
+ 
+ //Set it's timing function to linear, instead of the default ease-in, ease-out tiiming
+ pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+ 
+ //Select a paced calculation mode so the layer moves at a constant speed.
+ 
+ pathAnimation.calculationMode = kCAAnimationPaced;
+ 
+ //If the user selected it, make the layer rotate to follow the direction of the path.
+ if (rotateImageSwitch.isOn)
+   pathAnimation.rotationMode = kCAAnimationRotateAuto;
+ 
+ //install the path in the animation.
+ 
+ pathAnimation.path = path;
+ 
+ //Set the view controller as the delegate of hte animation.
+ pathAnimation.delegate = self;
+ 
+ //Install the animation in the layer.
+ [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
+       }
+       else
+       {
+         //Create a keyframe animation using an array of points (converted to NSValue objects)
+         BlobLayer *theBlobLyer = (BlobLayer *)theBlobView.layer;
+         CGPoint *randomPoints = theBlobLyer.randomPointsArray;
+         
+         NSMutableArray *pointsArray = [NSMutableArray arrayWithCapacity: pointCount];
+         
+         //For each point, create an NSValue of the coordinate, shifted to the coordinates
+         //of the blobView's parent view.
+         for (int index = 0; index <= pointCount; index++) //start and end with the first point
+         {
+           CGPoint aPoint = randomPoints[index % pointCount];
+           aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
+           [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
+         }
+         
+         CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
+         pathAnimation.values = pointsArray;
+         pathAnimation.duration = totalDuration;
+         //Use linear timing.
+         pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+         
+         //Use cubic paced calcluation, so we get a curved path and with constant velocity.
+         //(with paced animations we don't have to supply a keyTimes array)
+         pathAnimation.calculationMode = kCAAnimationCubicPaced;
+         pathAnimation.delegate = self;
+
+         [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
+       }
      }
    }
                      afterDelay: 0.5];
