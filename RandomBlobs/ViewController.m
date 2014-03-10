@@ -37,6 +37,9 @@
   theBlobView.showPoints = YES;
   show_control_points_switch.on = YES;
   
+  useViewAnimationSwitch.on = YES;
+  rotateImageSwitch.enabled = NO;
+  rotateImageSwitch.on = NO;
   
   [super viewDidLoad];
   animationCompleteObserver = [[NSNotificationCenter defaultCenter] addObserverForName: K_PATH_ANIMATION_COMPLETE_NOTICE
@@ -286,44 +289,44 @@
      }
      else
      {
-       if (FALSE)
+       if (TRUE)
        {
          //Create a CAKeyframeAnimation using the path from the BlobLayer.
          
- //Get the path.
- CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
- CGPoint origin = theBlobView.frame.origin;
- CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
- 
- //The path is using zero-based coordinates.
- //Create a new path using the coordinates of the VC's content view
- path = CGPathCreateCopyByTransformingPath(path, &transform);
- 
- //Create a keyframe animation object
- CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
- 
- pathAnimation.duration = totalDuration;
- 
- //Set it's timing function to linear, instead of the default ease-in, ease-out tiiming
- pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
- 
- //Select a paced calculation mode so the layer moves at a constant speed.
- 
- pathAnimation.calculationMode = kCAAnimationPaced;
- 
- //If the user selected it, make the layer rotate to follow the direction of the path.
- if (rotateImageSwitch.isOn)
-   pathAnimation.rotationMode = kCAAnimationRotateAuto;
- 
- //install the path in the animation.
- 
- pathAnimation.path = path;
- 
- //Set the view controller as the delegate of hte animation.
- pathAnimation.delegate = self;
- 
- //Install the animation in the layer.
- [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
+         //Get the path.
+         CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
+         CGPoint origin = theBlobView.frame.origin;
+         CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
+         
+         //The path is using zero-based coordinates.
+         //Create a new path using the coordinates of the VC's content view
+         path = CGPathCreateCopyByTransformingPath(path, &transform);
+         
+         //Create a keyframe animation object
+         CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
+         
+         pathAnimation.duration = totalDuration;
+         
+         //Set it's timing function to linear, instead of the default ease-in, ease-out tiiming
+         pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+         
+         //Select a paced calculation mode so the layer moves at a constant speed.
+         
+         pathAnimation.calculationMode = kCAAnimationPaced;
+         
+         //If the user selected it, make the layer rotate to follow the direction of the path.
+         if (rotateImageSwitch.isOn)
+           pathAnimation.rotationMode = kCAAnimationRotateAuto;
+         
+         //install the path in the animation.
+         
+         pathAnimation.path = path;
+         
+         //Set the view controller as the delegate of hte animation.
+         pathAnimation.delegate = self;
+         
+         //Install the animation in the layer.
+         [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
        }
        else
        {
@@ -358,6 +361,13 @@
      }
    }
                      afterDelay: 0.5];
+}
+
+- (IBAction)handleUseViewAnimationSwitch:(UISwitch *)sender
+{
+  rotateImageSwitch.enabled = !useViewAnimationSwitch.isOn;
+  if (useViewAnimationSwitch.isOn)
+    rotateImageSwitch.on = NO;
 }
 
 - (IBAction)handleStopAnimation:(UIButton *)sender
