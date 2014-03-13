@@ -88,11 +88,11 @@ You create a layer-based keyframe animation using an array of points  with a `CA
 2.		
 3. 	//For each point, create an NSValue of the coordinate, shifted to the coordinates
 4. 	//of the blobView's parent view.
-5.	 for (int index = 0; index <= pointCount; index++) //start and end with the first point
-6.	 {
-7.	   CGPoint aPoint = randomPoints[index % pointCount];
-8.	   aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
-9.	   [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
+5.	for (int index = 0; index <= pointCount; index++) //start and end with the first point
+6.	{
+7.	  CGPoint aPoint = randomPoints[index % pointCount];
+8.	  aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
+9.	  [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
 10.	}
 11.	
 12.	CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
@@ -136,14 +136,14 @@ The code to animate a layer along a `CGPath` is similar to the code to animate a
 
 
 ```Objective-C
-1.	  //Get the path.
-2.	  CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
-3.	  CGPoint origin = theBlobView.frame.origin;
-4.	  CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
+1.	 //Get the path.
+2.	 CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
+3.	 CGPoint origin = theBlobView.frame.origin;
+4.	 CGAffineTransform transform = CGAffineTransformMakeTranslation( origin.x, origin.y);
 5.	 
-6.	  //The path is using zero-based coordinates.
-7.	  //Create a new path using the coordinates of the VC's content view
-8.	  path = CGPathCreateCopyByTransformingPath(path, &transform);
+6.	 //The path is using zero-based coordinates.
+7.	 //Create a new path using the coordinates of the VC's content view
+8.	 path = CGPathCreateCopyByTransformingPath(path, &transform);
 9.	 
 10.	 //Create a keyframe animation object
 11.	 CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
