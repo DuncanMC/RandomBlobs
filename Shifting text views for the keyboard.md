@@ -44,6 +44,83 @@ Handling keyboard animations requires several steps:
 
 5. In the `UIKeyboardWillHideNotification` code, do the reverse of the previous step, and animate the view down again. Since we saved the keyboard shift amount, animation duration, and animation curve in the `UIKeyboardWillShowNotification` handler, this code is pretty simple.
 
-Putting all this togther, let's look at the code from our demo app that adds observers for the 
+Putting all this togther, let's look at the code from our demo app that adds observers for the `UIKeyboardWillShowNotification` and  `UIKeyboardWillHideNotification` observers:
+
+```objective-c
+showKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForName: UIKeyboardWillShowNotification
+  object: nil
+  queue: nil
+  usingBlock: ^(NSNotification *note)
+  {
+    CGRect keyboardFrame;
+    NSDictionary* userInfo = note.userInfo;
+    keyboardSlideDuration = [[userInfo objectForKey: UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    keyboardFrame = [[userInfo objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    keyboardAnimationCurve = [[userInfo objectForKey: UIKeyboardAnimationCurveUserInfoKey] integerValue]<<16;
+      
+    UIInterfaceOrientation theStatusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+  
+    CGFloat keyboardHeight;
+    if UIInterfaceOrientationIsLandscape(theStatusBarOrientation)
+      keyboardHeight = keyboardFrame.size.width;
+    else
+      keyboardHeight = keyboardFrame.size.height;
+      
+    CGRect fieldFrame = textFieldToEdit.bounds;
+    fieldFrame = [self.view convertRect: fieldFrame fromView: textFieldToEdit];
+    CGRect contentFrame = self.view.frame;
+    CGFloat fieldBottom = fieldFrame.origin.y + fieldFrame.size.height;
+      
+    keyboardShiftAmount= 0;
+    if (contentFrame.size.height - fieldBottom <keyboardHeight)
+    {
+      keyboardShiftAmount = keyboardHeight - (contentFrame.size.height - fieldBottom);
+        
+//    keyboardConstraint.constant -= keyboardShiftAmount;
+//    keyboardBottomConstraint.constant += keyboardShiftAmount;
+//    [self.view layoutIfNeeded];
+
+      [UIView animateWithDuration: keyboardSlideDuration
+        delay: 0
+        options: keyboardAnimationCurve
+        animations:
+        ^{
+          CGRect frame = self.view.frame;
+          frame.origin.y -= keyboardShiftAmount;
+          self.view.frame = frame;
+        }
+        completion: nil
+       ];
+    }
+  }
+];
+
+hideKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForName: UIKeyboardWillHideNotification
+  object: nil
+  queue: nil
+  usingBlock: ^(NSNotification *note)
+{
+  if (keyboardShiftAmount != 0)
+    [UIView animateWithDuration: keyboardSlideDuration
+      delay: 0
+      options: keyboardAnimationCurve
+      animations:
+     ^{
+       CGRect frame = self.view.frame;
+       frame.origin.y += keyboardShiftAmount;
+       self.view.frame = frame;
+
+//     keyboardConstraint.constant += keyboardShiftAmount;
+//     keyboardBottomConstraint.constant -= keyboardShiftAmount;
+//     [self.view setNeedsUpdateConstraints];
+//     [viewToShift layoutIfNeeded];
+     }
+                     completion: nil
+     ];
+  
+  
+}
+];
+```
 
 
