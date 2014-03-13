@@ -23,4 +23,4 @@ This project demonstrates a number of iOS aninimation and drawing techniques, as
 
 
 
-[path animation]:(/path_animation/)
+[path animation]:(/path_animation.md)
