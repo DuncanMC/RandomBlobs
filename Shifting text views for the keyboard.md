@@ -18,21 +18,22 @@ Handling keyboard animations requires several steps:
 3. In order to figure out how far to shift the text field, we need to know it's postion. In order to do **that**, we need the position of the text field. Sadly, the keyboard notifications don't give us any information about the field that is about to be edited. So, we have to somehow figure out which field is about to begin editing. To do that:
 
     a. Tell the compiler your view controller conforms to the correct protocol (`UITextViewDelegate` protocol for a `UITextView`, or `UITextFieldDelegate` protocol for a `UITextField`.)
+    
     b. Add an instance variable to remember the about-to-be-edited view. (**textFieldToEdit** in the demo project.)
+    
     c. implement the "begin editing" method for your view type (`textViewShouldBeginEditing:` for a `UITextView` or `textFieldShouldBeginEditing:` for a `UITextField`). The code is simple: 
+    
       ```objective-c
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-  textFieldToEdit = textField;
-  return YES;
-}
+      - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+      {
+        textFieldToEdit = textField;
+        return YES;
+      }
       ```
-
+      
     d. In IB, set your view controller as the delegate of your `UITextView` or `UITextField`. 
 
-
-
-3. In the `UIKeyboardWillShowNotification` code, fetch the keyboard frame and animation duration, as well as the animation curve. These values are provided in both the `UIKeyboardWillShowNotification` and the `UIKeyboardWillHideNotification`, but it's usually simpler to just record the information you need into instance variables, which you then use in the handler for the `UIKeyboardWillHideNotification` handler. 
+4. In the `UIKeyboardWillShowNotification` code, fetch the keyboard frame and animation duration, as well as the animation curve. These values are provided in both the `UIKeyboardWillShowNotification` and the `UIKeyboardWillHideNotification`, but it's usually simpler to just record the information you need into instance variables, which you then use in the handler for the `UIKeyboardWillHideNotification` handler. 
 
     a. Extract the height of the keyboard (from the frame provided in the **UIKeyboardFrameBeginUserInfoKey** key/value pair) and use it to calculate the amount we need to shift the keybard. We need to figure ot the Y coorindate of the bottom of the input field, in screen coorindates, and then figure out the minimum we need to shift the view up to fully expose the view. (see the code in the demo app, below). In the demo app, we save this value to the instance variable **keyboardShiftAmount**.
  
@@ -40,9 +41,10 @@ Handling keyboard animations requires several steps:
      
      c. Save the keyboard animation curve (from the **UIKeyboardAnimationCurveUserInfoKey** key/value pair) into an instance variable (called **keyboardAnimationCurve** in the demo project). The keyboard animation curve is a variable of type **UIViewAnimationCurve**, which ranges from 0 to 4, and is used by the older `beginAnimations:context:`… `commitAnimations` style of view animations. We want to use the newer block-based UIView animation method `animateWithDuration:delay:options:animations:completion:`, which takes animation curve information of enum type **UIViewAnimationOptions**. The animation curve info in the **UIViewAnimationOptions** is shifted up by 16 bits, so we have to convert the specified **UIViewAnimationCurve** to the corresponding **UIViewAnimationOptions** bit flags by shifting the values by 16 bits (as shown in the code) 
 
-4. Animate the view's frame by the (negative of the) specified keyboard shift amount, and using the duration and animation curve that we got in step 3, above. Some developers only shift the field that's being edited. I think this is confusing, since the field will float up and not longer be at the same position relative to the other fields in the form. Instead, I usually animate the view controller's entire content view up.
+5. Animate the view's frame by the (negative of the) specified keyboard shift amount, and using the duration and animation curve that we got in step 3, above. Some developers only shift the field that's being edited. I think this is confusing, since the field will float up and not longer be at the same position relative to the other fields in the form. Instead, I usually animate the view controller's entire content view up.
 
-5. In the `UIKeyboardWillHideNotification` code, do the reverse of the previous step, and animate the view down again. Since we saved the keyboard shift amount, animation duration, and animation curve in the `UIKeyboardWillShowNotification` handler, this code is pretty simple.
+6. In the `UIKeyboardWillHideNotification` code, do the reverse of the previous step, and animate the view down again. Since we saved the keyboard shift amount, animation duration, and animation curve in the `UIKeyboardWillShowNotification` handler, this code is pretty simple.
+
 
 Putting all this togther, let's look at the code from our demo app that adds observers for the `UIKeyboardWillShowNotification` and  `UIKeyboardWillHideNotification` observers:
 
