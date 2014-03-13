@@ -20,19 +20,19 @@ The other method lets you specify a CGPath object, which can contain a complex p
 As an example, say we have an array of points randomPointsArray that contains a set of random points and we want our view to follow a curved path between those points.
 
 To use UIView animation, the code might look like this:
-    ```objective-c
-	1.	int pointCount = prandomPointsArray.count;
-	2. CGFloat relDuration = 1.0 / pointCount;
-	3.	[UIView animateKeyframesWithDuration: totalDuration
-	4.	                               delay: 0.0
-	5.	                             options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
-	6.	                          animations:
-	7.	 ^{
-	8.	   for (int index = 1; index <= pointCount; index++)
-	9.	   {
-	10.	     CGFloat startTime = ((CGFloat)index-1)/pointCount;
-	11.	     
-	12.	     [UIView addKeyframeWithRelativeStartTime: startTime
+```Objective-C
+1.	int pointCount = prandomPointsArray.count;
+2. CGFloat relDuration = 1.0 / pointCount;
+3.	[UIView animateKeyframesWithDuration: totalDuration
+4.	                               delay: 0.0
+5.	                             options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
+6.	                          animations:
+7.	 ^{
+8.	   for (int index = 1; index <= pointCount; index++)
+9.	   {
+10.	     CGFloat startTime = ((CGFloat)index-1)/pointCount;
+11.	     
+12.	     [UIView addKeyframeWithRelativeStartTime: startTime
 	13.	                             relativeDuration: relDuration
 	14.	                                   animations: ^
 	15.	      {
@@ -50,7 +50,7 @@ To use UIView animation, the code might look like this:
 	27.	 }
 	28.	                          completion: nil
 	29.	 ];
-   '''
+'''
 
 At line 3 we begin building the call to animateKeyframesWithDuration:delay:options:animations:completion:. 
 
