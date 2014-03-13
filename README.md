@@ -10,7 +10,7 @@ This project demonstrates a number of iOS aninimation and drawing techniques, as
 
 * Using Catmull-Rom splines to create a path out of a set of points, where all the points are on a curve.
 * Creating an animated shape using a `CAShapeLayer` and a `CABasicAnimation` that changes the layer's path
-* Animating an object along a path [path animation](path_animation.md)
+* Animating an object along a path (link: [path animation](path_animation.md))
     * Doing keyframe animation animation using the new iOS 7 UIView method `animateKeyframesWithDuration:delay:options:animations:completion:`
     * Duplicating the results of `animateKeyframesWithDuration:delay:options:animations:completion:` using Core Animation CAKeyframeAnimation and an array of points
     * Creating keyframe animations using a `CAKeyframeAnimation` and a `CGPath`
