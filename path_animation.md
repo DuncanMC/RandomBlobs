@@ -33,24 +33,24 @@ To use UIView animation, the code might look like this:
 10.	     CGFloat startTime = ((CGFloat)index-1)/pointCount;
 11.	     
 12.	     [UIView addKeyframeWithRelativeStartTime: startTime
-	13.	                             relativeDuration: relDuration
-	14.	                                   animations: ^
-	15.	      {
-	16.	        int arrayIndex = index % pointCount;
-	17.	        CGPoint thisPoint = randomPointsArray[arrayIndex];
-	18.	
-	19.	        //In our example, the array of points are in the coordinate space of theBlobView.
-	20.	        //We need to convert them to the parent view’s coordinate space.
-	21.	        thisPoint = [theBlobView convertPoint: thisPoint toView: theBlobView.superview];
-	22.	        animationImageView.center = thisPoint;
-	23.	      }
-	24.	      ];
-	25.	   }
-	26.	   
-	27.	 }
-	28.	                          completion: nil
-	29.	 ];
-'''
+13.	                             relativeDuration: relDuration
+14.	                                   animations: ^
+15.	      {
+16.	        int arrayIndex = index % pointCount;
+17.	        CGPoint thisPoint = randomPointsArray[arrayIndex];
+18.	
+19.	        //In our example, the array of points are in the coordinate space of theBlobView.
+20.	        //We need to convert them to the parent view’s coordinate space.
+21.	        thisPoint = [theBlobView convertPoint: thisPoint toView: theBlobView.superview];
+22.	        animationImageView.center = thisPoint;
+23.	      }
+24.	      ];
+25.	   }
+26.	   
+27.	 }
+28.	                          completion: nil
+29.	 ];
+```
 
 At line 3 we begin building the call to animateKeyframesWithDuration:delay:options:animations:completion:. 
 
