@@ -247,6 +247,8 @@
    {
      if (useViewAnimationSwitch.isOn)
      {
+       //Use UIVIew animation
+       //(Method 1 in the path animation markdown file)
        [UIView animateKeyframesWithDuration: totalDuration
                                       delay:0.0
                                     options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
@@ -291,7 +293,40 @@
      {
        if (TRUE)
        {
+         //Create a keyframe animation using an array of points (converted to NSValue objects)
+         //(Method 2a in the path animation markdown file)
+         BlobLayer *theBlobLyer = (BlobLayer *)theBlobView.layer;
+         CGPoint *randomPoints = theBlobLyer.randomPointsArray;
+         
+         NSMutableArray *pointsArray = [NSMutableArray arrayWithCapacity: pointCount];
+         
+         //For each point, create an NSValue of the coordinate, shifted to the coordinates
+         //of the blobView's parent view.
+         for (int index = 0; index <= pointCount; index++) //start and end with the first point
+         {
+           CGPoint aPoint = randomPoints[index % pointCount];
+           aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
+           [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
+         }
+         
+         CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
+         pathAnimation.values = pointsArray;
+         pathAnimation.duration = totalDuration;
+         //Use linear timing.
+         pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+         
+         //Use cubic paced calcluation, so we get a curved path and with constant velocity.
+         //(with paced animations we don't have to supply a keyTimes array)
+         pathAnimation.calculationMode = kCAAnimationCubicPaced;
+         pathAnimation.delegate = self;
+         
+         [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
+       }
+       else
+       {
          //Create a CAKeyframeAnimation using the path from the BlobLayer.
+         //(Method 2b in the path animation markdown file)
+         
          
          //Get the path.
          CGPathRef path = ((CAShapeLayer *)theBlobView.layer).path;
@@ -326,36 +361,6 @@
          pathAnimation.delegate = self;
          
          //Install the animation in the layer.
-         [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
-       }
-       else
-       {
-         //Create a keyframe animation using an array of points (converted to NSValue objects)
-         BlobLayer *theBlobLyer = (BlobLayer *)theBlobView.layer;
-         CGPoint *randomPoints = theBlobLyer.randomPointsArray;
-         
-         NSMutableArray *pointsArray = [NSMutableArray arrayWithCapacity: pointCount];
-         
-         //For each point, create an NSValue of the coordinate, shifted to the coordinates
-         //of the blobView's parent view.
-         for (int index = 0; index <= pointCount; index++) //start and end with the first point
-         {
-           CGPoint aPoint = randomPoints[index % pointCount];
-           aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
-           [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
-         }
-         
-         CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];
-         pathAnimation.values = pointsArray;
-         pathAnimation.duration = totalDuration;
-         //Use linear timing.
-         pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-         
-         //Use cubic paced calcluation, so we get a curved path and with constant velocity.
-         //(with paced animations we don't have to supply a keyTimes array)
-         pathAnimation.calculationMode = kCAAnimationCubicPaced;
-         pathAnimation.delegate = self;
-
          [animationImageView.layer addAnimation: pathAnimation forKey: @"path animation"];
        }
      }
