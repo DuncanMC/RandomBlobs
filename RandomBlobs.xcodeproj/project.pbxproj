@@ -11,6 +11,8 @@
 		AE20440218CA65B500D98E89 /* DebugImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2043FF18CA65B500D98E89 /* DebugImageView.m */; };
 		AE20440318CA65B500D98E89 /* DebugLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AE20440118CA65B500D98E89 /* DebugLayer.m */; };
 		AE20440718CA67F800D98E89 /* CALayer+setUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */; };
+		AE772D2118D20B290050A61E /* path_animation.md in Resources */ = {isa = PBXBuildFile; fileRef = AE772D1F18D20B290050A61E /* path_animation.md */; };
+		AE772D2218D20B290050A61E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AE772D2018D20B290050A61E /* README.md */; };
 		AEE4929D18C6526300D43663 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929C18C6526300D43663 /* Foundation.framework */; };
 		AEE4929F18C6526300D43663 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929E18C6526300D43663 /* CoreGraphics.framework */; };
 		AEE492A118C6526300D43663 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE492A018C6526300D43663 /* UIKit.framework */; };
@@ -51,6 +53,8 @@
 		AE20440418CA65D600D98E89 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		AE20440518CA67F800D98E89 /* CALayer+setUIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+setUIColor.h"; sourceTree = "<group>"; };
 		AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+setUIColor.m"; sourceTree = "<group>"; };
+		AE772D1F18D20B290050A61E /* path_animation.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = path_animation.md; sourceTree = SOURCE_ROOT; };
+		AE772D2018D20B290050A61E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		AEE4929918C6526300D43663 /* RandomBlobs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomBlobs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE4929C18C6526300D43663 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEE4929E18C6526300D43663 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,6 +134,15 @@
 			path = DebugLayer;
 			sourceTree = "<group>";
 		};
+		AE772D1E18D20B100050A61E /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				AE772D1F18D20B290050A61E /* path_animation.md */,
+				AE772D2018D20B290050A61E /* README.md */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
 		AEE4929018C6526300D43663 = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +197,7 @@
 		AEE492A318C6526300D43663 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AE772D1E18D20B100050A61E /* Documentation */,
 				AEE492A418C6526300D43663 /* RandomBlobs-Info.plist */,
 				AEE492A518C6526300D43663 /* InfoPlist.strings */,
 				AEE492A818C6526300D43663 /* main.m */,
@@ -286,7 +300,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE772D2118D20B290050A61E /* path_animation.md in Resources */,
 				AEE492B518C6526300D43663 /* Images.xcassets in Resources */,
+				AE772D2218D20B290050A61E /* README.md in Resources */,
 				AEE492A718C6526300D43663 /* InfoPlist.strings in Resources */,
 				AEE492B018C6526300D43663 /* Main.storyboard in Resources */,
 			);
