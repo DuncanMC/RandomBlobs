@@ -52,6 +52,7 @@ showKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
   queue: nil
   usingBlock: ^(NSNotification *note)
   {
+    //Get the keyboard frame from the notificaiton's userinfo dictionary (in non-rotated screen coordinates)
     CGRect keyboardFrame;
     NSDictionary* userInfo = note.userInfo;
     keyboardSlideDuration = [[userInfo objectForKey: UIKeyboardAnimationDurationUserInfoKey] floatValue];
@@ -61,6 +62,8 @@ showKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
     UIInterfaceOrientation theStatusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
   
     CGFloat keyboardHeight;
+    
+    //if we're in landscape, treat use the reported keyboard width as the height
     if UIInterfaceOrientationIsLandscape(theStatusBarOrientation)
       keyboardHeight = keyboardFrame.size.width;
     else
@@ -75,11 +78,15 @@ showKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
     if (contentFrame.size.height - fieldBottom <keyboardHeight)
     {
       keyboardShiftAmount = keyboardHeight - (contentFrame.size.height - fieldBottom);
-        
+//----------------------------------------------------------------------------------------------
+//This is the code to shift the view if we're using AutoLayout
 //    keyboardConstraint.constant -= keyboardShiftAmount;
 //    keyboardBottomConstraint.constant += keyboardShiftAmount;
 //    [self.view layoutIfNeeded];
+//----------------------------------------------------------------------------------------------
 
+      //----------------------------------------------------------------------------------------------
+      //This is the code for handling the keyboard animations for strut-and-spring style view resizing
       [UIView animateWithDuration: keyboardSlideDuration
         delay: 0
         options: keyboardAnimationCurve
@@ -91,6 +98,7 @@ showKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
         }
         completion: nil
        ];
+      //----------------------------------------------------------------------------------------------
     }
   }
 ];
@@ -101,6 +109,10 @@ hideKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
   usingBlock: ^(NSNotification *note)
 {
   if (keyboardShiftAmount != 0)
+  {
+    //------------------------------------------------------------------------------------------
+    //This is the code for animating the view back down for strut-and-spring style view resizing
+
     [UIView animateWithDuration: keyboardSlideDuration
       delay: 0
       options: keyboardAnimationCurve
@@ -109,18 +121,24 @@ hideKeyboardNotificaiton = [[NSNotificationCenter defaultCenter] addObserverForN
        CGRect frame = self.view.frame;
        frame.origin.y += keyboardShiftAmount;
        self.view.frame = frame;
+    //------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------
+//This is the code to shift the view back down if we're using AutoLayout
 //     keyboardConstraint.constant += keyboardShiftAmount;
 //     keyboardBottomConstraint.constant -= keyboardShiftAmount;
 //     [self.view setNeedsUpdateConstraints];
 //     [viewToShift layoutIfNeeded];
+//----------------------------------------------------------------------------------------------
      }
                      completion: nil
      ];
+   }
   
   
 }
 ];
 ```
 
+Note that if you're using AutoLayout, there are several more steps and the code is a little different. You need to add a top constraint on your view, with a constant offset from the top layout guide, and a bottom constraint to the view that's tied to the bottom layout guide. Then you need to link thise to IBOutlets in your view controller so you can change their offset amounts in code. In the code above, we've used constraints who's IBOutlets are called **keyboardConstraint** and **keyboardBottomConstraint**
 
