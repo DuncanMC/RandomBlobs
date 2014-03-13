@@ -24,8 +24,8 @@ As an example, say we have an array of points **randomPointsArray** that contain
 To use UIView animation, the code might look like this:
 
 ```Objective-C
-1.	int pointCount = prandomPointsArray.count;
-2. CGFloat relDuration = 1.0 / pointCount;
+1.  int pointCount = prandomPointsArray.count;
+2.  CGFloat relDuration = 1.0 / pointCount;
 3.	[UIView animateKeyframesWithDuration: totalDuration
 4.	                               delay: 0.0
 5.	                             options: UIViewKeyframeAnimationOptionCalculationModeCubicPaced + UIViewAnimationOptionCurveLinear
@@ -90,9 +90,9 @@ You create a layer-based keyframe animation using an array of points  with a `CA
 4. 	//of the blobView's parent view.
 5.	for (int index = 0; index <= pointCount; index++) //start and end with the first point
 6.	{
-7.	  CGPoint aPoint = randomPoints[index % pointCount];
-8.	  aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
-9.	  [pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
+7.		CGPoint aPoint = randomPoints[index % pointCount];
+8.		aPoint = [theBlobView convertPoint: aPoint toView: theBlobView.superview];
+9.		[pointsArray addObject: [NSValue valueWithCGPoint: aPoint]];
 10.	}
 11.	
 12.	CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath: @"position"];

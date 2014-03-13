@@ -13,6 +13,7 @@
 		AE20440718CA67F800D98E89 /* CALayer+setUIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */; };
 		AE772D2118D20B290050A61E /* path_animation.md in Resources */ = {isa = PBXBuildFile; fileRef = AE772D1F18D20B290050A61E /* path_animation.md */; };
 		AE772D2218D20B290050A61E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AE772D2018D20B290050A61E /* README.md */; };
+		AE772D2418D244540050A61E /* Shifting text views for the keyboard.md in Resources */ = {isa = PBXBuildFile; fileRef = AE772D2318D244540050A61E /* Shifting text views for the keyboard.md */; };
 		AEE4929D18C6526300D43663 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929C18C6526300D43663 /* Foundation.framework */; };
 		AEE4929F18C6526300D43663 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE4929E18C6526300D43663 /* CoreGraphics.framework */; };
 		AEE492A118C6526300D43663 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEE492A018C6526300D43663 /* UIKit.framework */; };
@@ -55,6 +56,7 @@
 		AE20440618CA67F800D98E89 /* CALayer+setUIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+setUIColor.m"; sourceTree = "<group>"; };
 		AE772D1F18D20B290050A61E /* path_animation.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = path_animation.md; sourceTree = SOURCE_ROOT; };
 		AE772D2018D20B290050A61E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
+		AE772D2318D244540050A61E /* Shifting text views for the keyboard.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Shifting text views for the keyboard.md"; sourceTree = SOURCE_ROOT; };
 		AEE4929918C6526300D43663 /* RandomBlobs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomBlobs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE4929C18C6526300D43663 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AEE4929E18C6526300D43663 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -139,6 +141,7 @@
 			children = (
 				AE772D1F18D20B290050A61E /* path_animation.md */,
 				AE772D2018D20B290050A61E /* README.md */,
+				AE772D2318D244540050A61E /* Shifting text views for the keyboard.md */,
 			);
 			name = Documentation;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			files = (
 				AE772D2118D20B290050A61E /* path_animation.md in Resources */,
 				AEE492B518C6526300D43663 /* Images.xcassets in Resources */,
+				AE772D2418D244540050A61E /* Shifting text views for the keyboard.md in Resources */,
 				AE772D2218D20B290050A61E /* README.md in Resources */,
 				AEE492A718C6526300D43663 /* InfoPlist.strings in Resources */,
 				AEE492B018C6526300D43663 /* Main.storyboard in Resources */,

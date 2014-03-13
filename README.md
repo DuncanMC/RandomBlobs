@@ -19,7 +19,7 @@ This project demonstrates a number of iOS aninimation and drawing techniques, as
 ##Miscellaneous techniques
 
 * Using block-based NSNotificationCenter observers
-* Sliding your views to make room for the keyboard
+* [Sliding your views to make room for the keyboard](Shifting text views for the keyboard.md)
 
 
 
