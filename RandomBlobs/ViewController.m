@@ -357,6 +357,8 @@
          
          pathAnimation.path = path;
          
+         CGPathRelease(path);
+         
          //Set the view controller as the delegate of hte animation.
          pathAnimation.delegate = self;
          
